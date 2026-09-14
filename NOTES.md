@@ -39,3 +39,15 @@ build with devkitPro (`make`), copy `deploy/subsdk9` + `deploy/main.npdm` to
 
 - kinnay/NintendoClients wiki (NEX protocols), Pretendo developer docs, exlaunch.
 - Sibling servers: `borderlands-1` (NEX, same pattern), `diablo-3` (custom Demonware backend).
+## Binary findings (2026-09-13, main pulled over FTP)
+
+- Title `010090400D366000` **confirmed Torchlight II** (build path `C:\Torch\Release\builds\sourcecode\Delvers\NX64\Shipping`, Runic Games).
+  SHA-256 `06F685D885BE4A8D68EAF8E5EBAF127795C1889341D3759F5D1639422B4E4595`; text @0, rodata @0x01DFC000, data @0x02302000.
+- **Online is NEX + Pia**, linked statically with names stripped: `NexMatchRandomMatchmakeJob`, `NexMatchBrowseMatchmakeJob`,
+  `NexMatchJointSessionJob`, `RendezVousLogout`, "Pia Send", hosts `g%08x-%%.s.n.srv.nintendo.net`,
+  `nncs1-/nncs2-%.n.n.srv.nintendo.net`, `%s.%%.p.srv.nintendo.net`. So this NEX scaffold is the right base.
+  Also Vivox voice (`v4mt1s.www.vivox.com`), which needs nothing from Nextendo.
+- No `SetSandboxAccessKey` symbol (stripped), so tl2-hack cannot hook it by name. **Access key candidates** (the only
+  8-hex strings in rodata): `0a4f113b`, `ebf6d32e`. Try them in `TL2_ACCESS_KEY`; a wrong key fails the PRUDP handshake.
+- SDK imports present: `nn::nsd::ResolveEx` (tl2-hack logs the game server id), sockets (both variants), `nn::fs::SetAllocator`.
+  Not imported: nn::ssl, curl, bcat, socket Read/Write. Error popups use `nn::err::ShowError(ErrorResultVariant const&)`.
