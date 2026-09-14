@@ -51,3 +51,16 @@ build with devkitPro (`make`), copy `deploy/subsdk9` + `deploy/main.npdm` to
   8-hex strings in rodata): `0a4f113b`, `ebf6d32e`. Try them in `TL2_ACCESS_KEY`; a wrong key fails the PRUDP handshake.
 - SDK imports present: `nn::nsd::ResolveEx` (tl2-hack logs the game server id), sockets (both variants), `nn::fs::SetAllocator`.
   Not imported: nn::ssl, curl, bcat, socket Read/Write. Error popups use `nn::err::ShowError(ErrorResultVariant const&)`.
+## First live run (2026-09-13, CFW Switch, tl2-hack)
+
+- **Game server id `0x2e608000`**: `nsd resolve 'g2e608000-%.s.n.srv.nintendo.net'` -> `g2e608000-lp1.s.n.srv.nintendo.net`,
+  getaddrinfo -> 192.168.137.1, connect :443 from main+0x1ca5e18, then `ssl SetHostName` (NEX over WebSocket/TLS).
+  Retried three times. The u32 is not stored as a plain constant in text/rodata/data.
+  sni-router had no route, so the connection fell to baas-proxy (BACKEND_DEFAULT) and the game showed online error popups.
+  Now routed: `BACKEND_TL2=127.0.0.1:8458` (sni-router commit "Route Torchlight II ...").
+- Also resolved `2e608000.%.p.srv.nintendo.net` (no result): the Pia/P2P host pattern.
+- **Access key: `ebf6d32e`** (not yet confirmed live). Of the two 8-hex strings in rodata, `0a4f113b` sits inside the
+  Vivox SIP strings (voice chat), while `ebf6d32e` (VA 0x1F85966) sits among the game's own strings next to
+  `m_currentServer.IsValid()` and `core::LOBBY_ATTEMPT_CONNECT`. Set in the launcher as `TL2_ACCESS_KEY`.
+- tl2-hack: 25 hooks installed; nn::nex symbols are stripped (not found). The first build crashed the game at launch:
+  exlaunch's hook JIT pool only fit 20 trampolines (fixed in tl2-hack, JitSize 0x4000).
