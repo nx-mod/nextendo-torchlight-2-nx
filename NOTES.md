@@ -64,3 +64,11 @@ build with devkitPro (`make`), copy `deploy/subsdk9` + `deploy/main.npdm` to
   `m_currentServer.IsValid()` and `core::LOBBY_ATTEMPT_CONNECT`. Set in the launcher as `TL2_ACCESS_KEY`.
 - tl2-hack: 25 hooks installed; nn::nex symbols are stripped (not found). The first build crashed the game at launch:
   exlaunch's hook JIT pool only fit 20 trampolines (fixed in tl2-hack, JitSize 0x4000).
+## First login (2026-09-13 23:59, CFW Switch)
+
+- **Access key `ebf6d32e` confirmed**: sni-router routed g2e608000 to :8458, PRUDP CONNECT ok, `ValidateAndRequestTicketWithParam`
+  (NSA 5066638171662936567 -> account pid 1800000003), secure CONNECT ok, `Register`, then
+  `CreateMatchmakeSessionWithParam` (0x6d/38) -> gid 1. Followed by NATTraversal 0x3/5, MatchmakeExtension 0x6d/51 (twice)
+  and MatchMakingExt 0x32/1.
+- In game the session opened, but the player list ("view players") did not show the host correctly and offered a
+  friend request to an empty player. To check: what 0x6d/51 returns and the participant data the game reads.

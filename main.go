@@ -32,9 +32,10 @@ const (
 )
 
 var (
-	// accessKey is the game's NEX access key: the literal it passes to
-	// nn::nex::BackEndServices::SetSandboxAccessKey, logged by tl2-hack. No default until known.
-	accessKey  = envOr("TL2_ACCESS_KEY", "")
+	// accessKey is Torchlight II's NEX access key. Its nn::nex symbols are stripped, so it was
+	// read from rodata (VA 0x1F85966, beside core::LOBBY_ATTEMPT_CONNECT) and confirmed live on a
+	// CFW Switch on 2026-09-13: PRUDP login, ticket and secure connection all succeeded with it.
+	accessKey  = envOr("TL2_ACCESS_KEY", "ebf6d32e")
 	nexVersion = envOrInt("TL2_NEX_VERSION", 40000)
 
 	nextendoHost   = envOr("NEXTENDO_HOST", "127.0.0.1")
