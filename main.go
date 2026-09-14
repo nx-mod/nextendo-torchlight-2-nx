@@ -99,6 +99,10 @@ func main() {
 	secureEndpoint.SetSecureAccount(securePassword, securePID)
 
 	mm := nex.NewMatchmaking()
+	// Torchlight II looks its own session up with FindMatchmakeSessionByParticipant (0x6D.0x33)
+	// right after creating it; the core's default empty answer left the host missing from
+	// "view players" and the game ended its participation (0x32.1).
+	mm.FindByParticipantEnabled = true
 	secureEndpoint.Register(nex.ProtocolSecureConnection, nex.SecureConnectionHandler())
 	extHandler := mm.ExtensionHandler()
 	secureEndpoint.Register(nex.ProtocolMatchmakeExtension, func(c *nex.Connection, req *nex.RMCMessage) *nex.RMCMessage {
