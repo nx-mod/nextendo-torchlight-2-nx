@@ -54,7 +54,7 @@ build with devkitPro (`make`), copy `deploy/subsdk9` + `deploy/main.npdm` to
 ## First live run (2026-09-13, CFW Switch, tl2-hack)
 
 - **Game server id `0x2e608000`**: `nsd resolve 'g2e608000-%.s.n.srv.nintendo.net'` -> `g2e608000-lp1.s.n.srv.nintendo.net`,
-  getaddrinfo -> 192.168.137.1, connect :443 from main+0x1ca5e18, then `ssl SetHostName` (NEX over WebSocket/TLS).
+  getaddrinfo -> <router IP>, connect :443 from main+0x1ca5e18, then `ssl SetHostName` (NEX over WebSocket/TLS).
   Retried three times. The u32 is not stored as a plain constant in text/rodata/data.
   sni-router had no route, so the connection fell to baas-proxy (BACKEND_DEFAULT) and the game showed online error popups.
   Now routed: `BACKEND_TL2=127.0.0.1:8458` (sni-router commit "Route Torchlight II ...").
@@ -67,7 +67,7 @@ build with devkitPro (`make`), copy `deploy/subsdk9` + `deploy/main.npdm` to
 ## First login (2026-09-13 23:59, CFW Switch)
 
 - **Access key `ebf6d32e` confirmed**: sni-router routed g2e608000 to :8458, PRUDP CONNECT ok, `ValidateAndRequestTicketWithParam`
-  (NSA 5066638171662936567 -> account pid 1800000003), secure CONNECT ok, `Register`, then
+  (NSA <console NSA id> -> account pid 1800000003), secure CONNECT ok, `Register`, then
   `CreateMatchmakeSessionWithParam` (0x6d/38) -> gid 1. Followed by NATTraversal 0x3/5, MatchmakeExtension 0x6d/51 (twice)
   and MatchMakingExt 0x32/1.
 - In game the session opened, but the player list ("view players") did not show the host correctly and offered a
