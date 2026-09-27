@@ -18,7 +18,10 @@ Keep this file updated as you go: it is the map for this server.
 3. **Game server id**: tl2-hack logs `nsd resolve 'g<id>-%.s.n.srv.nintendo.net'`. Add the
    host to sni-router (`BACKEND_TL2=127.0.0.1:8458`) and to the Switch hosts files.
 4. **NEX version**, then the RMC calls the game makes: unhandled ones are logged in full
-   (`[TL2 Secure] UNHANDLED ...`).
+   (`[TL2 Secure] UNHANDLED ...`) and recorded structurally by `unhandled.go`
+   (proto/method, count, last body sample), surfaced on the dashboard under
+   `/api/stats` → `unhandled`. Use it to pin down the player-list issue below
+   (which method returns the participant data the game misreads).
 
 ## Ports (local stack)
 
