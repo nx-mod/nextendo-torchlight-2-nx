@@ -63,3 +63,7 @@ Game: Torchlight II, title `010090400D366000`, game server id `0x2e608000`.
 - **[Pretendo Network](https://pretendo.network)**: NEX documentation ([developer docs](https://developer.pretendo.network/overview/nex)).
 
 References were read and reimplemented; no code was copied.
+
+## Credits
+
+Built by nx-mod for the **Nextendo Network**, on the work of the Nextendo Network team — https://nextendo.network. Nextendo is awesome.
