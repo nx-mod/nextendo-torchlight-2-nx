@@ -1,5 +1,7 @@
 # torchlight-2
 
+**A new game server implementation by nx-mod** for the Nextendo Network.
+
 NEX game server for **Torchlight II** (Nintendo Switch, `010090400D366000`), built on the NextendoNetwork [nextendo-nex](https://github.com/NextendoNetwork/nextendo-nex) core. Source only: no binaries, no certs, no game assets. Not affiliated with Runic Games, Panic Button, Perfect World or Nintendo.
 
 ## Status
